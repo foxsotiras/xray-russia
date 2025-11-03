@@ -7,7 +7,7 @@
 
   outputs = { self, nixpkgs }: let
     system = "x86_64-linux";
-    pkgs = import nixpkgs { inherit system; };
+    pkgs = nixpkgs.legacyPackages.${system};
     geodata-tag = "202511030401";
   in {
     packages.${system}.xray-russia = pkgs.buildGoModule rec {
