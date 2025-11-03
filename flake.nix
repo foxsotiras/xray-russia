@@ -10,7 +10,7 @@
     pkgs = import nixpkgs { inherit system; };
     geodata-tag = "202511030401";
   in {
-    packages.${system}.default = pkgs.buildGoModule rec {
+    packages.${system}.xray-russia = pkgs.buildGoModule rec {
       pname = "xray-russia";
       version = "25.10.15";
 
@@ -44,9 +44,8 @@
       installPhase = ''
         runHook preInstall
         install -Dm755 $GOPATH/bin/main $out/bin/xray
-        mkdir -p $out/usr/share/xray
-        install -Dm644 ${geoip} $out/usr/share/xray/geoip.dat
-        install -Dm644 ${geosite} $out/usr/share/xray/geosite.dat
+        install -Dm644 ${geoip} $out/bin/geoip.dat
+        install -Dm644 ${geosite} $out/bin/geosite.dat
         runHook postInstall
       '';
 
