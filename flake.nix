@@ -5,10 +5,11 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
   };
 
-  outputs = { self, nixpkgs }: let
+  outputs = { self, nixpkgs }:
+  let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
-    geodata-tag = "202511030401";
+    geodata-tag = "202511080938";
   in {
     packages.${system}.xray-russia = pkgs.buildGoModule rec {
       pname = "xray-russia";
@@ -25,12 +26,12 @@
 
       geoip = pkgs.fetchurl {
         url = "https://github.com/runetfreedom/russia-v2ray-rules-dat/releases/download/${geodata-tag}/geoip.dat";
-        sha256 = "10b7jn1amjx7d3m6yaa6dazp0jyr6l5rn0qhf9x9yhk16a3kjn22";
+        sha256 = "1wn8wmlkbdbpfnhnjk5d23g9lgcwipa3860rjqiwzqxf8nf8qp1l";
       };
 
       geosite = pkgs.fetchurl {
         url = "https://github.com/runetfreedom/russia-v2ray-rules-dat/releases/download/${geodata-tag}/geosite.dat";
-        sha256 = "08w2qkbf93cc4sg35ajsvzhpixghmnpikskx5j6aqzggrnbdbhq3";
+        sha256 = "004a72zd7kiw9x3dlxy9fdqri680dyyfyf5lxc9cl55vcggkzpnm";
       };
 
       doCheck = false;
@@ -48,14 +49,6 @@
         install -Dm644 ${geosite} $out/bin/geosite.dat
         runHook postInstall
       '';
-
-      meta = with pkgs.lib; {
-        description = "Platform for building proxies to bypass network restrictions. A replacement for v2ray-core, with XTLS support and fully compatible configuration";
-        mainProgram = "xray";
-        homepage = "https://github.com/XTLS/Xray-core";
-        license = with licenses; [ mpl20 ];
-        maintainers = with maintainers; [ iopq ];
-      };
     };
   };
 }
